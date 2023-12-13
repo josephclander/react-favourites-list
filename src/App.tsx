@@ -3,11 +3,28 @@ import Gigs from './Gigs';
 import info from './data.json';
 import { useState } from 'react';
 
-function App() {
-  const [favourites, setFavourites] = useState([]);
-  const [gigs, setGigs] = useState(info.data);
+export type gigObj = {
+  id: number;
+  header?: string;
+  imageSrc?: string;
+  imageTitle?: string;
+  description?: string;
+  date: string;
+  time: string;
+  location: string;
+};
 
-  const handleFavourites = (id) => {
+type InfoType = {
+  data: gigObj[];
+};
+
+const importedInfo: InfoType = info as InfoType;
+
+function App() {
+  const [favourites, setFavourites] = useState<gigObj[]>([]);
+  const [gigs, setGigs] = useState<gigObj[]>(importedInfo.data);
+
+  const handleFavourites: (id: number) => void = (id) => {
     setFavourites((prevFavourites) => {
       // see if clicked id already exists in favourites
       const isFavourite = prevFavourites.some((gig) => gig.id === id);

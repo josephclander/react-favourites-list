@@ -1,9 +1,19 @@
 import React from 'react';
-import Gig from './Gig';
+import Gig, { GigProps } from './Gig';
 
-const Gigs = (props) => {
-  const { gigs, handleFavourites, className, isFavourite } = props;
+export type GigsProps = {
+  gigs: GigProps['data'][];
+  handleFavourites: GigProps['handleFavourites'];
+  className: string;
+  isFavourite: boolean;
+};
 
+const Gigs: React.FC<GigsProps> = ({
+  gigs,
+  handleFavourites,
+  className,
+  isFavourite,
+}) => {
   return (
     <ul className={`gigs ${className}`}>
       {gigs.map((gig) => (
