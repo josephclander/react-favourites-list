@@ -8,22 +8,23 @@ function App() {
   const [gigs, setGigs] = useState(info.data);
 
   const handleFavourites = (id) => {
-    setFavourites((prevState) => {
-      // Check if the gig is already in favourites
-      if (prevState.find((gig) => gig.id === id)) {
-        // If it is, remove it from favourites
-        return prevState.filter((gig) => gig.id !== id);
+    setFavourites((prevFavourites) => {
+      // see if clicked id already exists in favourites
+      const isFavourite = prevFavourites.some((gig) => gig.id === id);
+      if (isFavourite) {
+        // remove the item from favourites
+        return prevFavourites.filter((gig) => gig.id !== id);
       } else {
-        // Otherwise, add it to favourites
-        const newFavourite = gigs.find((gig) => gig.id === id);
-        if (newFavourite) {
-          // Remove the gig from the main list
-          setGigs(gigs.filter((gig) => gig.id !== id));
-          // Add the gig to favourites
-          return [...prevState, newFavourite];
+        // Add the item to favourites and remove from gigs
+        const gigToAdd = gigs.find((gig) => gig.id === id);
+        if (gigToAdd) {
+          setGigs((gigs) => gigs.filter((gig) => gig.id !== id));
+          return [...prevFavourites, gigToAdd];
         }
-        return prevState;
       }
+
+      // Fallback
+      return prevFavourites;
     });
   };
 
